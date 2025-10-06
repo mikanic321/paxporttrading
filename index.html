@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心理测量系统 - 专业心理测试</title>
+    <style>
+        :root {
+            --primary: #6a89cc;
+            --secondary: #4a69bd;
+            --accent: #1e3799;
+            --light: #f5f7fa;
+            --dark: #2c3e50;
+            --success: #78e08f;
+            --warning: #f6b93b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f4f8;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .intro-section, .test-section, .result-section {
+            display: none;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .option {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px 15px;
+            background: var(--light);
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+        
+        .option:hover {
+            background: #e6e9f0;
+        }
+        
+        .option.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--secondary);
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .result-content {
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .result-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        
+        .result-description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        
+        .score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+        
+        .recommendations {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .recommendations h3 {
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .options {
+                flex-direction: column;
+            }
+            
+            .option {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>心理测量系统</h1>
+            <p class="subtitle">专业心理评估与自我认知工具</p>
+        </header>
+        
+        <div class="card intro-section active" id="intro-section">
+            <h2>欢迎使用心理测量系统</h2>
+            <p>本测试将帮助您更好地了解自己的心理状态和个性特征。测试包含20个问题，大约需要10分钟完成。</p>
+            <p>请根据您的实际情况选择最符合的选项。所有回答将严格保密，仅用于为您提供个性化分析。</p>
+            <p>点击下方按钮开始测试。</p>
+            <button class="btn btn-block" id="start-test">开始测试</button>
+        </div>
+        
+        <div class="card test-section" id="test-section">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            
+            <div id="questions-container">
+                <!-- 问题将通过JavaScript动态加载 -->
+            </div>
+            
+            <button class="btn btn-block" id="next-question" style="display: none;">下一题</button>
+            <button class="btn btn-block" id="submit-test" style="display: none;">提交测试</button>
+        </div>
+        
+        <div class="card result-section" id="result-section">
+            <div class="result-content">
+                <h2 class="result-title">测试结果</h2>
+                <div id="result-details">
+                    <!-- 结果将通过JavaScript动态加载 -->
+                </div>
+                <button class="btn" id="restart-test">重新测试</button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>© 2023 心理测量系统 | 本测试结果仅供参考，如有需要请咨询专业心理咨询师</p>
+    </footer>
+
+    <script>
+        // 测试问题数据
+        const questions = [
+            { id: 1, text: "我经常感到快乐和满足", category: "情绪" },
+            { id: 2, text: "我能够很好地处理压力", category: "压力管理" },
+            { id: 3, text: "我对自己有信心", category: "自尊" },
+            { id: 4, text: "我容易与他人建立良好关系", category: "社交" },
+            { id: 5, text: "我能够专注完成任务", category: "专注力" },
+            { id: 6, text: "我经常感到焦虑", category: "情绪" },
+            { id: 7, text: "我能够从挫折中快速恢复", category: "韧性" },
+            { id: 8, text: "我对未来充满希望", category: "乐观" },
+            { id: 9, text: "我能够清晰表达自己的想法", category: "沟通" },
+            { id: 10, text: "我善于理解他人的感受", category: "共情" },
+            { id: 11, text: "我经常感到疲惫", category: "精力" },
+            { id: 12, text: "我能够有效管理时间", category: "组织能力" },
+            { id: 13, text: "我对自己有清晰的认知", category: "自我意识" },
+            { id: 14, text: "我能够接受不同的观点", category: "开放性" },
+            { id: 15, text: "我经常感到孤独", category: "社交" },
+            { id: 16, text: "我能够为自己设定合理的目标", category: "目标设定" },
+            { id: 17, text: "我善于解决问题", category: "问题解决" },
+            { id: 18, text: "我经常批评自己", category: "自尊" },
+            { id: 19, text: "我能够平衡工作与生活", category: "生活平衡" },
+            { id: 20, text: "我对自己的人生方向满意", category: "生活满意度" }
+        ];
+
+        // 回答选项
+        const options = [
+            { value: 1, text: "非常不符合" },
+            { value: 2, text: "不太符合" },
+            { value: 3, text: "一般" },
+            { value: 4, text: "比较符合" },
+            { value: 5, text: "非常符合" }
+        ];
+
+        // 存储用户答案
+        let userAnswers = {};
+        let currentQuestionIndex = 0;
+
+        // DOM元素
+        const introSection = document.getElementById('intro-section');
+        const testSection = document.getElementById('test-section');
+        const resultSection = document.getElementById('result-section');
+        const questionsContainer = document.getElementById('questions-container');
+        const progressBar = document.getElementById('progress');
+        const nextButton = document.getElementById('next-question');
+        const submitButton = document.getElementById('submit-test');
+        const startButton = document.getElementById('start-test');
+        const restartButton = document.getElementById('restart-test');
+
+        // 初始化测试
+        function initTest() {
+            userAnswers = {};
+            currentQuestionIndex = 0;
+            updateProgressBar();
+            loadQuestion(currentQuestionIndex);
+        }
+
+        // 加载问题
+        function loadQuestion(index) {
+            questionsContainer.innerHTML = '';
+            
+            const question = questions[index];
+            const questionElement = document.createElement('div');
+            questionElement.className = 'question';
+            
+            const questionText = document.createElement('div');
+            questionText.className = 'question-text';
+            questionText.textContent = `${index + 1}. ${question.text}`;
+            questionElement.appendChild(questionText);
+            
+            const optionsContainer = document.createElement('div');
+            optionsContainer.className = 'options';
+            
+            options.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                if (userAnswers[question.id] === option.value) {
+                    optionElement.classList.add('selected');
+                }
+                optionElement.textContent = option.text;
+                optionElement.dataset.value = option.value;
+                
+                optionElement.addEventListener('click', () => {
+                    // 移除其他选项的选中状态
+                    optionsContainer.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // 选中当前选项
+                    optionElement.classList.add('selected');
+                    userAnswers[question.id] = option.value;
+                    
+                    // 显示下一题按钮
+                    if (index < questions.length - 1) {
+                        nextButton.style.display = 'block';
+                        submitButton.style.display = 'none';
+                    } else {
+                        nextButton.style.display = 'none';
+                        submitButton.style.display = 'block';
+                    }
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            questionElement.appendChild(optionsContainer);
+            questionsContainer.appendChild(questionElement);
+        }
+
+        // 更新进度条
+        function updateProgressBar() {
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            progressBar.style.width = `${progress}%`;
+        }
+
+        // 下一题
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                updateProgressBar();
+                loadQuestion(currentQuestionIndex);
+                
+                // 隐藏按钮，直到用户选择答案
+                nextButton.style.display = 'none';
+            }
+        }
+
+        // 提交测试
+        function submitTest() {
+            // 计算得分
+            const score = calculateScore();
+            
+            // 显示结果
+            showResults(score);
+            
+            // 存储测试结果（实际应用中应发送到服务器）
+            saveResults(score);
+        }
+
+        // 计算得分
+        function calculateScore() {
+            let totalScore = 0;
+            let answeredCount = 0;
+            
+            for (const questionId in userAnswers) {
+                totalScore += parseInt(userAnswers[questionId]);
+                answeredCount++;
+            }
+            
+            // 如果用户没有回答所有问题，计算平均分
+            return answeredCount > 0 ? Math.round(totalScore / answeredCount * 20) : 0;
+        }
+
+        // 显示结果
+        function showResults(score) {
+            testSection.classList.remove('active');
+            resultSection.classList.add('active');
+            
+            const resultDetails = document.getElementById('result-details');
+            resultDetails.innerHTML = '';
+            
+            const scoreElement = document.createElement('div');
+            scoreElement.className = 'score';
+            scoreElement.textContent = `${score}/100`;
+            resultDetails.appendChild(scoreElement);
+            
+            const description = document.createElement('div');
+            description.className = 'result-description';
+            
+            if (score >= 80) {
+                description.textContent = "您的心理状态非常健康！您展现出良好的情绪调节能力、积极的生活态度和健康的社交关系。继续保持这种积极的心态和生活习惯。";
+            } else if (score >= 60) {
+                description.textContent = "您的心理状态总体良好。您在大多数方面表现出健康的心态，但某些领域可能还有提升空间。关注自我成长，继续保持积极的生活方式。";
+            } else if (score >= 40) {
+                description.textContent = "您的心理状态处于中等水平。您可能在某些方面遇到挑战，但仍有资源和能力应对。考虑关注自我照顾和寻求支持。";
+            } else {
+                description.textContent = "您的测试结果显示可能需要更多关注心理健康。请考虑与专业人士交流，获取个性化支持和建议。";
+            }
+            
+            resultDetails.appendChild(description);
+            
+            // 添加建议
+            const recommendations = document.createElement('div');
+            recommendations.className = 'recommendations';
+            
+            const recTitle = document.createElement('h3');
+            recTitle.textContent = '个性化建议';
+            recommendations.appendChild(recTitle);
+            
+            const recList = document.createElement('ul');
+            recList.innerHTML = `
+                <li>每天花10-15分钟进行正念冥想或深呼吸练习</li>
+                <li>保持规律的体育锻炼，每周至少150分钟中等强度运动</li>
+                <li>建立和维护健康的社交关系</li>
+                <li>确保充足的睡眠，每晚7-9小时</li>
+                <li>学习压力管理技巧，如时间管理和问题解决策略</li>
+            `;
+            recommendations.appendChild(recList);
+            
+            resultDetails.appendChild(recommendations);
+        }
+
+        // 保存结果到localStorage
+        function saveResults(score) {
+            const testResult = {
+                score: score,
+                date: new Date().toISOString(),
+                answers: userAnswers
+            };
+            
+            // 获取现有结果或创建新数组
+            let allResults = JSON.parse(localStorage.getItem('psychologicalTestResults')) || [];
+            
+            // 添加新结果
+            allResults.push(testResult);
+            
+            // 保存回localStorage
+            localStorage.setItem('psychologicalTestResults', JSON.stringify(allResults));
+        }
+
+        // 重新开始测试
+        function restartTest() {
+            resultSection.classList.remove('active');
+            introSection.classList.add('active');
+        }
+
+        // 事件监听
+        startButton.addEventListener('click', () => {
+            introSection.classList.remove('active');
+            testSection.classList.add('active');
+            initTest();
+        });
+
+        nextButton.addEventListener('click', nextQuestion);
+        submitButton.addEventListener('click', submitTest);
+        restartButton.addEventListener('click', restartTest);
+    </script>
+</body>
+</html>
