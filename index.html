@@ -1,508 +1,442 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>心理测量系统 - 专业心理测试</title>
-    <style>
-        :root {
-            --primary: #6a89cc;
-            --secondary: #4a69bd;
-            --accent: #1e3799;
-            --light: #f5f7fa;
-            --dark: #2c3e50;
-            --success: #78e08f;
-            --warning: #f6b93b;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f0f4f8;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            padding: 30px 0;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .intro-section, .test-section, .result-section {
-            display: none;
-        }
-        
-        .active {
-            display: block;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-top: 20px;
-        }
-        
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-block {
-            display: block;
-            width: 100%;
-            text-align: center;
-        }
-        
-        .question {
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .question:last-child {
-            border-bottom: none;
-        }
-        
-        .question-text {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            font-weight: 500;
-        }
-        
-        .options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        
-        .option {
-            flex: 1;
-            min-width: 120px;
-            padding: 12px 15px;
-            background: var(--light);
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.2s ease;
-            border: 2px solid transparent;
-        }
-        
-        .option:hover {
-            background: #e6e9f0;
-        }
-        
-        .option.selected {
-            background: var(--primary);
-            color: white;
-            border-color: var(--secondary);
-        }
-        
-        .progress-bar {
-            height: 8px;
-            background: #e0e0e0;
-            border-radius: 4px;
-            margin-bottom: 30px;
-            overflow: hidden;
-        }
-        
-        .progress {
-            height: 100%;
-            background: var(--primary);
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-        
-        .result-content {
-            text-align: center;
-            padding: 20px 0;
-        }
-        
-        .result-title {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--accent);
-        }
-        
-        .result-description {
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-            line-height: 1.8;
-        }
-        
-        .score {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin: 20px 0;
-        }
-        
-        .recommendations {
-            background: var(--light);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            text-align: left;
-        }
-        
-        .recommendations h3 {
-            margin-bottom: 15px;
-            color: var(--accent);
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .options {
-                flex-direction: column;
-            }
-            
-            .option {
-                min-width: 100%;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>心理测量系统</h1>
-            <p class="subtitle">专业心理评估与自我认知工具</p>
-        </header>
-        
-        <div class="card intro-section active" id="intro-section">
-            <h2>欢迎使用心理测量系统</h2>
-            <p>本测试将帮助您更好地了解自己的心理状态和个性特征。测试包含20个问题，大约需要10分钟完成。</p>
-            <p>请根据您的实际情况选择最符合的选项。所有回答将严格保密，仅用于为您提供个性化分析。</p>
-            <p>点击下方按钮开始测试。</p>
-            <button class="btn btn-block" id="start-test">开始测试</button>
-        </div>
-        
-        <div class="card test-section" id="test-section">
-            <div class="progress-bar">
-                <div class="progress" id="progress"></div>
-            </div>
-            
-            <div id="questions-container">
-                <!-- 问题将通过JavaScript动态加载 -->
-            </div>
-            
-            <button class="btn btn-block" id="next-question" style="display: none;">下一题</button>
-            <button class="btn btn-block" id="submit-test" style="display: none;">提交测试</button>
-        </div>
-        
-        <div class="card result-section" id="result-section">
-            <div class="result-content">
-                <h2 class="result-title">测试结果</h2>
-                <div id="result-details">
-                    <!-- 结果将通过JavaScript动态加载 -->
-                </div>
-                <button class="btn" id="restart-test">重新测试</button>
-            </div>
-        </div>
+import React, { useState, useEffect } from 'react';
+import { Menu, X, ChevronRight, Globe, Search, ShieldCheck, Ship, CheckCircle, ArrowRight, MapPin, Mail, Phone } from 'lucide-react';
+
+// Custom Logo Component for PAXPORT
+// MODIFIED: Now supports image file "公司logo&slogan.png"
+const PaxportLogo = ({ className, textClass }) => {
+  const [imageError, setImageError] = useState(false);
+
+  // 假设您的图片放在 public 目录下，或者您可以替换为具体的 URL
+  // Placeholder path for the user's uploaded image
+  const logoUrl = "./公司logo&slogan.png"; 
+
+  return (
+    <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
+      
+      {/* 1. 尝试加载图片 Logo 
+        Try to load the image logo first. 
+      */}
+      {!imageError ? (
+        <img 
+          src={logoUrl} 
+          alt="Paxport - Your Reliable Port" 
+          className="h-10 md:h-12 w-auto object-contain" 
+          onError={() => setImageError(true)} // 如果图片加载失败，切换到 SVG 模式
+        />
+      ) : (
+        /* 2. 如果图片加载失败（例如在预览环境中），则显示 SVG 备份
+          Fallback to SVG logo if image fails to load 
+        */
+        <>
+          <div className={`w-9 h-9 bg-blue-600 text-white flex items-center justify-center rounded-lg shadow-md shadow-blue-600/20 ${className}`}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 4C6 2.89543 6.89543 2 8 2H12C15.866 2 19 5.13401 19 9C19 12.866 15.866 16 12 16H10V20C10 21.1046 9.10457 22 8 22C6.89543 22 6 21.1046 6 20V4Z" fill="currentColor" fillOpacity="0.9"/>
+              <path d="M10 16H12C14.5 16 16.5 14 16.5 11.5" stroke="white" strokeOpacity="0.3" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+          </div>
+          <span className={`text-xl font-bold tracking-wide ${textClass} transition-colors`}>
+            PAXPORT
+          </span>
+        </>
+      )}
     </div>
-    
-    <footer>
-        <p>© 2023 心理测量系统 | 本测试结果仅供参考，如有需要请咨询专业心理咨询师</p>
-    </footer>
+  );
+};
 
-    <script>
-        // 测试问题数据
-        const questions = [
-            { id: 1, text: "我经常感到快乐和满足", category: "情绪" },
-            { id: 2, text: "我能够很好地处理压力", category: "压力管理" },
-            { id: 3, text: "我对自己有信心", category: "自尊" },
-            { id: 4, text: "我容易与他人建立良好关系", category: "社交" },
-            { id: 5, text: "我能够专注完成任务", category: "专注力" },
-            { id: 6, text: "我经常感到焦虑", category: "情绪" },
-            { id: 7, text: "我能够从挫折中快速恢复", category: "韧性" },
-            { id: 8, text: "我对未来充满希望", category: "乐观" },
-            { id: 9, text: "我能够清晰表达自己的想法", category: "沟通" },
-            { id: 10, text: "我善于理解他人的感受", category: "共情" },
-            { id: 11, text: "我经常感到疲惫", category: "精力" },
-            { id: 12, text: "我能够有效管理时间", category: "组织能力" },
-            { id: 13, text: "我对自己有清晰的认知", category: "自我意识" },
-            { id: 14, text: "我能够接受不同的观点", category: "开放性" },
-            { id: 15, text: "我经常感到孤独", category: "社交" },
-            { id: 16, text: "我能够为自己设定合理的目标", category: "目标设定" },
-            { id: 17, text: "我善于解决问题", category: "问题解决" },
-            { id: 18, text: "我经常批评自己", category: "自尊" },
-            { id: 19, text: "我能够平衡工作与生活", category: "生活平衡" },
-            { id: 20, text: "我对自己的人生方向满意", category: "生活满意度" }
-        ];
+const App = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-        // 回答选项
-        const options = [
-            { value: 1, text: "非常不符合" },
-            { value: 2, text: "不太符合" },
-            { value: 3, text: "一般" },
-            { value: 4, text: "比较符合" },
-            { value: 5, text: "非常符合" }
-        ];
+  // Handle scroll effect for navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-        // 存储用户答案
-        let userAnswers = {};
-        let currentQuestionIndex = 0;
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMobileMenuOpen(false);
+  };
 
-        // DOM元素
-        const introSection = document.getElementById('intro-section');
-        const testSection = document.getElementById('test-section');
-        const resultSection = document.getElementById('result-section');
-        const questionsContainer = document.getElementById('questions-container');
-        const progressBar = document.getElementById('progress');
-        const nextButton = document.getElementById('next-question');
-        const submitButton = document.getElementById('submit-test');
-        const startButton = document.getElementById('start-test');
-        const restartButton = document.getElementById('restart-test');
+  return (
+    <div className="font-sans text-slate-800 bg-white antialiased selection:bg-blue-100 selection:text-blue-900">
+      {/* Navigation */}
+      <nav
+        className={`fixed w-full z-50 transition-all duration-300 ${
+          isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'
+        }`}
+      >
+        <div className="container mx-auto px-6 flex justify-between items-center">
+          {/* Logo */}
+          <PaxportLogo 
+            className="" 
+            textClass={isScrolled ? 'text-slate-900' : 'text-white'} 
+          />
 
-        // 初始化测试
-        function initTest() {
-            userAnswers = {};
-            currentQuestionIndex = 0;
-            updateProgressBar();
-            loadQuestion(currentQuestionIndex);
-        }
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-8">
+            {['Services', 'Process', 'Why Us', 'Contact'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))}
+                className={`text-sm font-medium hover:text-blue-500 transition-colors ${
+                  isScrolled ? 'text-slate-600' : 'text-slate-200'
+                }`}
+              >
+                {item}
+              </button>
+            ))}
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20"
+            >
+              Contact Us
+            </button>
+          </div>
 
-        // 加载问题
-        function loadQuestion(index) {
-            questionsContainer.innerHTML = '';
-            
-            const question = questions[index];
-            const questionElement = document.createElement('div');
-            questionElement.className = 'question';
-            
-            const questionText = document.createElement('div');
-            questionText.className = 'question-text';
-            questionText.textContent = `${index + 1}. ${question.text}`;
-            questionElement.appendChild(questionText);
-            
-            const optionsContainer = document.createElement('div');
-            optionsContainer.className = 'options';
-            
-            options.forEach(option => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                if (userAnswers[question.id] === option.value) {
-                    optionElement.classList.add('selected');
-                }
-                optionElement.textContent = option.text;
-                optionElement.dataset.value = option.value;
-                
-                optionElement.addEventListener('click', () => {
-                    // 移除其他选项的选中状态
-                    optionsContainer.querySelectorAll('.option').forEach(opt => {
-                        opt.classList.remove('selected');
-                    });
-                    
-                    // 选中当前选项
-                    optionElement.classList.add('selected');
-                    userAnswers[question.id] = option.value;
-                    
-                    // 显示下一题按钮
-                    if (index < questions.length - 1) {
-                        nextButton.style.display = 'block';
-                        submitButton.style.display = 'none';
-                    } else {
-                        nextButton.style.display = 'none';
-                        submitButton.style.display = 'block';
-                    }
-                });
-                
-                optionsContainer.appendChild(optionElement);
-            });
-            
-            questionElement.appendChild(optionsContainer);
-            questionsContainer.appendChild(questionElement);
-        }
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-slate-800"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="text-slate-900" /> : <Menu className={isScrolled ? 'text-slate-900' : 'text-white'} />}
+          </button>
+        </div>
 
-        // 更新进度条
-        function updateProgressBar() {
-            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
-            progressBar.style.width = `${progress}%`;
-        }
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div className="absolute top-full left-0 w-full bg-white border-t border-slate-100 shadow-xl py-4 px-6 flex flex-col gap-4 md:hidden">
+            {['Services', 'Process', 'Why Us', 'Contact'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))}
+                className="text-left text-slate-600 font-medium py-2 border-b border-slate-50"
+              >
+                {item}
+              </button>
+            ))}
+            <button onClick={() => scrollToSection('contact')} className="w-full py-3 bg-blue-600 text-white rounded font-medium">
+              Contact Us
+            </button>
+          </div>
+        )}
+      </nav>
 
-        // 下一题
-        function nextQuestion() {
-            if (currentQuestionIndex < questions.length - 1) {
-                currentQuestionIndex++;
-                updateProgressBar();
-                loadQuestion(currentQuestionIndex);
-                
-                // 隐藏按钮，直到用户选择答案
-                nextButton.style.display = 'none';
-            }
-        }
+      {/* Hero Section */}
+      <header className="relative h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image with Overlay */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+            alt="Shanghai Skyline Modern Architecture"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-slate-900/60 gradient-to-b from-slate-900/80 to-transparent"></div>
+        </div>
 
-        // 提交测试
-        function submitTest() {
-            // 计算得分
-            const score = calculateScore();
-            
-            // 显示结果
-            showResults(score);
-            
-            // 存储测试结果（实际应用中应发送到服务器）
-            saveResults(score);
-        }
+        <div className="container mx-auto px-6 relative z-10 pt-20">
+          <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/90 backdrop-blur-sm border border-white/20 text-xs font-medium mb-6 uppercase tracking-wider">
+              <MapPin size={12} /> Based in Shanghai, Serving the World
+            </div>
+            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+              Your Reliable Port <br />
+              <span className="text-blue-400">For Global Sourcing</span>
+            </h1>
+            <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+              Paxport bridges the gap between Western businesses and Chinese manufacturing. 
+              Where top talent gathers to secure your supply chain from Shanghai to the world.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button 
+                onClick={() => scrollToSection('services')}
+                className="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white font-medium rounded hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/50 flex items-center justify-center gap-2"
+              >
+                Explore Services <ArrowRight size={18} />
+              </button>
+              <button 
+                onClick={() => scrollToSection('contact')}
+                className="w-full sm:w-auto px-8 py-4 bg-white/10 text-white backdrop-blur-sm border border-white/20 font-medium rounded hover:bg-white/20 transition-all"
+              >
+                Contact Us
+              </button>
+            </div>
+          </div>
+        </div>
 
-        // 计算得分
-        function calculateScore() {
-            let totalScore = 0;
-            let answeredCount = 0;
-            
-            for (const questionId in userAnswers) {
-                totalScore += parseInt(userAnswers[questionId]);
-                answeredCount++;
-            }
-            
-            // 如果用户没有回答所有问题，计算平均分
-            return answeredCount > 0 ? Math.round(totalScore / answeredCount * 20) : 0;
-        }
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/50">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+          </svg>
+        </div>
+      </header>
 
-        // 显示结果
-        function showResults(score) {
-            testSection.classList.remove('active');
-            resultSection.classList.add('active');
-            
-            const resultDetails = document.getElementById('result-details');
-            resultDetails.innerHTML = '';
-            
-            const scoreElement = document.createElement('div');
-            scoreElement.className = 'score';
-            scoreElement.textContent = `${score}/100`;
-            resultDetails.appendChild(scoreElement);
-            
-            const description = document.createElement('div');
-            description.className = 'result-description';
-            
-            if (score >= 80) {
-                description.textContent = "您的心理状态非常健康！您展现出良好的情绪调节能力、积极的生活态度和健康的社交关系。继续保持这种积极的心态和生活习惯。";
-            } else if (score >= 60) {
-                description.textContent = "您的心理状态总体良好。您在大多数方面表现出健康的心态，但某些领域可能还有提升空间。关注自我成长，继续保持积极的生活方式。";
-            } else if (score >= 40) {
-                description.textContent = "您的心理状态处于中等水平。您可能在某些方面遇到挑战，但仍有资源和能力应对。考虑关注自我照顾和寻求支持。";
-            } else {
-                description.textContent = "您的测试结果显示可能需要更多关注心理健康。请考虑与专业人士交流，获取个性化支持和建议。";
-            }
-            
-            resultDetails.appendChild(description);
-            
-            // 添加建议
-            const recommendations = document.createElement('div');
-            recommendations.className = 'recommendations';
-            
-            const recTitle = document.createElement('h3');
-            recTitle.textContent = '个性化建议';
-            recommendations.appendChild(recTitle);
-            
-            const recList = document.createElement('ul');
-            recList.innerHTML = `
-                <li>每天花10-15分钟进行正念冥想或深呼吸练习</li>
-                <li>保持规律的体育锻炼，每周至少150分钟中等强度运动</li>
-                <li>建立和维护健康的社交关系</li>
-                <li>确保充足的睡眠，每晚7-9小时</li>
-                <li>学习压力管理技巧，如时间管理和问题解决策略</li>
-            `;
-            recommendations.appendChild(recList);
-            
-            resultDetails.appendChild(recommendations);
-        }
+      {/* Stats Section */}
+      <section className="py-12 bg-white border-b border-slate-100">
+        <div className="container mx-auto px-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-slate-100">
+            {[
+              { label: "Years Experience", value: "10+" },
+              { label: "Factories Audited", value: "500+" },
+              { label: "Orders Shipped", value: "2K+" },
+              { label: "Client Satisfaction", value: "98%" },
+            ].map((stat, idx) => (
+              <div key={idx} className={`text-center ${idx % 2 !== 0 ? 'border-l md:border-l-0 border-slate-100 pl-4 md:pl-0' : ''}`}>
+                <div className="text-3xl md:text-4xl font-bold text-slate-900 mb-1">{stat.value}</div>
+                <div className="text-sm text-slate-500 uppercase tracking-wide">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        // 保存结果到localStorage
-        function saveResults(score) {
-            const testResult = {
-                score: score,
-                date: new Date().toISOString(),
-                answers: userAnswers
-            };
-            
-            // 获取现有结果或创建新数组
-            let allResults = JSON.parse(localStorage.getItem('psychologicalTestResults')) || [];
-            
-            // 添加新结果
-            allResults.push(testResult);
-            
-            // 保存回localStorage
-            localStorage.setItem('psychologicalTestResults', JSON.stringify(allResults));
-        }
+      {/* Value Proposition / Why Us */}
+      <section id="why-us" className="py-24 bg-slate-50">
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <h2 className="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2">Why Choose Paxport</h2>
+              <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Western Standards, Local Expertise.</h3>
+              <p className="text-slate-600 mb-8 leading-relaxed">
+                Sourcing from China can be complex. Paxport acts as your dedicated harbor in Shanghai, 
+                gathering the best talent to ensure your interests are protected at every step.
+              </p>
+              
+              <div className="space-y-6">
+                {[
+                  { icon: <Globe className="text-blue-600" />, title: "Native Communication", desc: "Our team speaks fluent English and understands Western business culture." },
+                  { icon: <MapPin className="text-blue-600" />, title: "Strategic Location", desc: "Located in Shanghai, the heart of global trade, giving us rapid access to key manufacturing hubs." },
+                  { icon: <ShieldCheck className="text-blue-600" />, title: "Risk Mitigation", desc: "Strict verification of suppliers and rigorous contracts to protect your capital." }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex gap-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center border border-slate-100">
+                      {item.icon}
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-slate-900">{item.title}</h4>
+                      <p className="text-sm text-slate-500 mt-1">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="relative">
+              <div className="absolute -inset-4 bg-blue-100 rounded-lg transform rotate-3"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1632&q=80" 
+                alt="Business Meeting" 
+                className="relative rounded-lg shadow-xl w-full"
+              />
+              <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded shadow-lg max-w-xs hidden md:block">
+                <p className="font-serif italic text-slate-600">"Paxport simplified our supply chain and reduced our costs by 20% within the first quarter."</p>
+                <div className="mt-4 flex items-center gap-2">
+                  <div className="w-8 h-8 bg-slate-200 rounded-full"></div>
+                  <span className="text-sm font-bold text-slate-900">Mark D. <span className="font-normal text-slate-500">/ CEO, TechFlow USA</span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-        // 重新开始测试
-        function restartTest() {
-            resultSection.classList.remove('active');
-            introSection.classList.add('active');
-        }
+      {/* Services Grid */}
+      <section id="services" className="py-24 bg-white">
+        <div className="container mx-auto px-6 text-center max-w-3xl mb-16">
+          <h2 className="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2">Our Expertise</h2>
+          <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">End-to-End Procurement Solutions</h3>
+          <p className="text-slate-600">
+            Whether you need product sourcing, factory audits, or logistics management, we handle the heavy lifting so you can focus on sales.
+          </p>
+        </div>
 
-        // 事件监听
-        startButton.addEventListener('click', () => {
-            introSection.classList.remove('active');
-            testSection.classList.add('active');
-            initTest();
-        });
+        <div className="container mx-auto px-6">
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Service 1 */}
+            <div className="group p-8 border border-slate-100 rounded-xl hover:shadow-xl hover:border-blue-100 transition-all duration-300 bg-slate-50/50 hover:bg-white">
+              <div className="w-14 h-14 bg-blue-600 text-white rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Search size={28} />
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 mb-3">Sourcing & Negotiation</h4>
+              <p className="text-slate-500 mb-6 leading-relaxed">
+                We identify reliable manufacturers, not just traders. We negotiate the best prices and terms using our local leverage.
+              </p>
+              <ul className="space-y-2">
+                {['Supplier Verification', 'Price Benchmarking', 'Sample Consolidation'].map(i => (
+                  <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
+                    <CheckCircle size={14} className="text-blue-500" /> {i}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        nextButton.addEventListener('click', nextQuestion);
-        submitButton.addEventListener('click', submitTest);
-        restartButton.addEventListener('click', restartTest);
-    </script>
-</body>
-</html>
+            {/* Service 2 */}
+            <div className="group p-8 border border-slate-100 rounded-xl hover:shadow-xl hover:border-blue-100 transition-all duration-300 bg-slate-50/50 hover:bg-white">
+              <div className="w-14 h-14 bg-indigo-600 text-white rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <ShieldCheck size={28} />
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 mb-3">Quality Control</h4>
+              <p className="text-slate-500 mb-6 leading-relaxed">
+                Never pay for defective goods again. Our inspectors visit the factory floor to ensure your specifications are met.
+              </p>
+              <ul className="space-y-2">
+                {['Pre-production Inspection', 'During Production Check', 'Pre-shipment Inspection'].map(i => (
+                  <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
+                    <CheckCircle size={14} className="text-indigo-500" /> {i}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Service 3 */}
+            <div className="group p-8 border border-slate-100 rounded-xl hover:shadow-xl hover:border-blue-100 transition-all duration-300 bg-slate-50/50 hover:bg-white">
+              <div className="w-14 h-14 bg-slate-800 text-white rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Ship size={28} />
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 mb-3">Logistics & Shipping</h4>
+              <p className="text-slate-500 mb-6 leading-relaxed">
+                From the factory door to your warehouse. We handle export documentation, customs clearance, and freight booking.
+              </p>
+              <ul className="space-y-2">
+                {['FOB/CIF/DDP Services', 'Container Consolidation', 'Customs Documentation'].map(i => (
+                  <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
+                    <CheckCircle size={14} className="text-slate-600" /> {i}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Process Section */}
+      <section id="process" className="py-24 bg-slate-900 text-white">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+            <div className="max-w-2xl">
+              <h2 className="text-sm font-bold text-blue-400 uppercase tracking-wider mb-2">How It Works</h2>
+              <h3 className="text-3xl md:text-4xl font-bold mb-4">A Streamlined Workflow</h3>
+              <p className="text-slate-400">We've refined our process over a decade to ensure transparency and speed.</p>
+            </div>
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="hidden md:flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium mt-4 md:mt-0"
+            >
+              Start your project <ChevronRight size={16} />
+            </button>
+          </div>
+
+          <div className="grid md:grid-cols-4 gap-8 relative">
+            {/* Connecting Line (Desktop only) */}
+            <div className="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-slate-800 z-0"></div>
+
+            {[
+              { step: "01", title: "Requirement", desc: "You send us your product specs or concept." },
+              { step: "02", title: "Sourcing", desc: "We find suppliers and provide detailed quotes." },
+              { step: "03", title: "Production", desc: "We manage sampling and oversee manufacturing." },
+              { step: "04", title: "Delivery", desc: "QC inspection followed by global shipping." },
+            ].map((item, idx) => (
+              <div key={idx} className="relative z-10">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-blue-900/50 border-4 border-slate-900">
+                  {item.step}
+                </div>
+                <h4 className="text-xl font-bold mb-2">{item.title}</h4>
+                <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact / CTA Section - REDESIGNED: Horizontal Layout, No Form */}
+      <section id="contact" className="py-24 bg-slate-50">
+        <div className="container mx-auto px-6">
+          <div className="bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-800 p-12 text-white">
+            
+            <div className="text-center mb-12">
+              <h3 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h3>
+              <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+                Ready to streamline your procurement? Reach out to us directly through any of the channels below.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              {/* Office */}
+              <div className="flex flex-col items-center text-center p-8 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors border border-slate-700/50">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-900/50">
+                   <MapPin size={28} />
+                </div>
+                <h5 className="font-bold text-xl mb-3">Headquarters</h5>
+                <p className="text-slate-400 leading-relaxed">
+                  Floor 24, Shanghai Tower,<br/>
+                  Lujiazui, Pudong New District,<br/>
+                  Shanghai, China
+                </p>
+              </div>
+
+              {/* Email */}
+              <div className="flex flex-col items-center text-center p-8 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors border border-slate-700/50">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-900/50">
+                   <Mail size={28} />
+                </div>
+                <h5 className="font-bold text-xl mb-3">Email Us</h5>
+                <p className="text-slate-400 mb-3">inquiry@paxport.com</p>
+                <a href="mailto:inquiry@paxport.com" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors">
+                  Send an email <ArrowRight size={14} />
+                </a>
+              </div>
+
+              {/* Phone */}
+              <div className="flex flex-col items-center text-center p-8 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors border border-slate-700/50">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-900/50">
+                   <Phone size={28} />
+                </div>
+                <h5 className="font-bold text-xl mb-3">Call / WhatsApp</h5>
+                <p className="text-slate-400 mb-2">+86 21 1234 5678</p>
+                <p className="text-sm text-slate-500">Mon-Fri, 9am - 6pm (GMT+8)</p>
+              </div>
+            </div>
+            
+            <div className="border-t border-slate-800 pt-8 flex flex-col items-center">
+              <p className="text-xs text-slate-500 uppercase tracking-widest mb-6 font-semibold">Follow Our Updates</p>
+              <div className="flex gap-6">
+                <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all cursor-pointer text-slate-400 hover:text-white border border-slate-700 hover:border-blue-500">
+                  <span className="font-bold">in</span>
+                </div>
+                <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all cursor-pointer text-slate-400 hover:text-white border border-slate-700 hover:border-blue-500">
+                  <span className="font-bold">f</span>
+                </div>
+                <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all cursor-pointer text-slate-400 hover:text-white border border-slate-700 hover:border-blue-500">
+                  <span className="font-bold">tw</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Simple Footer */}
+      <footer className="bg-white py-12 border-t border-slate-100">
+        <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+          <PaxportLogo className="bg-slate-900" textClass="text-slate-900" />
+          <div className="text-sm text-slate-500">
+            &copy; {new Date().getFullYear()} Paxport Co., Ltd. All rights reserved.
+          </div>
+          <div className="flex gap-6 text-sm text-slate-600 font-medium">
+            <a href="#" className="hover:text-blue-600">Privacy Policy</a>
+            <a href="#" className="hover:text-blue-600">Terms of Service</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+};
+
+export default App;
