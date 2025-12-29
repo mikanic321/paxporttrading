@@ -1,442 +1,492 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronRight, Globe, Search, ShieldCheck, Ship, CheckCircle, ArrowRight, MapPin, Mail, Phone } from 'lucide-react';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paxport - Global Sourcing Partner</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React & ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
-// Custom Logo Component for PAXPORT
-// MODIFIED: Now supports image file "公司logo&slogan.png"
-const PaxportLogo = ({ className, textClass }) => {
-  const [imageError, setImageError] = useState(false);
+    <!-- Custom Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  // 假设您的图片放在 public 目录下，或者您可以替换为具体的 URL
-  // Placeholder path for the user's uploaded image
-  const logoUrl = "./公司logo&slogan.png"; 
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-white">
+    <div id="root"></div>
 
-  return (
-    <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-      
-      {/* 1. 尝试加载图片 Logo 
-        Try to load the image logo first. 
-      */}
-      {!imageError ? (
-        <img 
-          src={logoUrl} 
-          alt="Paxport - Your Reliable Port" 
-          className="h-10 md:h-12 w-auto object-contain" 
-          onError={() => setImageError(true)} // 如果图片加载失败，切换到 SVG 模式
-        />
-      ) : (
-        /* 2. 如果图片加载失败（例如在预览环境中），则显示 SVG 备份
-          Fallback to SVG logo if image fails to load 
-        */
-        <>
-          <div className={`w-9 h-9 bg-blue-600 text-white flex items-center justify-center rounded-lg shadow-md shadow-blue-600/20 ${className}`}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 4C6 2.89543 6.89543 2 8 2H12C15.866 2 19 5.13401 19 9C19 12.866 15.866 16 12 16H10V20C10 21.1046 9.10457 22 8 22C6.89543 22 6 21.1046 6 20V4Z" fill="currentColor" fillOpacity="0.9"/>
-              <path d="M10 16H12C14.5 16 16.5 14 16.5 11.5" stroke="white" strokeOpacity="0.3" strokeWidth="1.5" strokeLinecap="round"/>
-            </svg>
-          </div>
-          <span className={`text-xl font-bold tracking-wide ${textClass} transition-colors`}>
-            PAXPORT
-          </span>
-        </>
-      )}
-    </div>
-  );
-};
+    <script type="text/babel">
+        const { useState, useEffect } = React;
 
-const App = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+        // --- Icon Components Helper ---
+        // 为了在 HTML 单文件中使用，我们将 Lucide 图标封装一下
+        // Icons: Menu, X, ChevronRight, Globe, Search, ShieldCheck, Ship, CheckCircle, ArrowRight, MapPin, Mail, Phone
+        
+        const Icon = ({ name, size = 24, className = "" }) => {
+            return <i data-lucide={name} width={size} height={size} className={className}></i>;
+        };
 
-  // Handle scroll effect for navbar
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+        const Menu = (props) => <Icon name="menu" {...props} />;
+        const X = (props) => <Icon name="x" {...props} />;
+        const ChevronRight = (props) => <Icon name="chevron-right" {...props} />;
+        const Globe = (props) => <Icon name="globe" {...props} />;
+        const Search = (props) => <Icon name="search" {...props} />;
+        const ShieldCheck = (props) => <Icon name="shield-check" {...props} />;
+        const Ship = (props) => <Icon name="ship" {...props} />;
+        const CheckCircle = (props) => <Icon name="check-circle" {...props} />;
+        const ArrowRight = (props) => <Icon name="arrow-right" {...props} />;
+        const MapPin = (props) => <Icon name="map-pin" {...props} />;
+        const Mail = (props) => <Icon name="mail" {...props} />;
+        const Phone = (props) => <Icon name="phone" {...props} />;
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMobileMenuOpen(false);
-  };
+        // --- Main Components ---
 
-  return (
-    <div className="font-sans text-slate-800 bg-white antialiased selection:bg-blue-100 selection:text-blue-900">
-      {/* Navigation */}
-      <nav
-        className={`fixed w-full z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'
-        }`}
-      >
-        <div className="container mx-auto px-6 flex justify-between items-center">
-          {/* Logo */}
-          <PaxportLogo 
-            className="" 
-            textClass={isScrolled ? 'text-slate-900' : 'text-white'} 
-          />
+        const PaxportLogo = ({ className, textClass }) => {
+            const [imageError, setImageError] = useState(false);
+            // 这里假设图片就在同级目录下
+            const logoUrl = "./公司logo&slogan.png"; 
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-8">
-            {['Services', 'Process', 'Why Us', 'Contact'].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))}
-                className={`text-sm font-medium hover:text-blue-500 transition-colors ${
-                  isScrolled ? 'text-slate-600' : 'text-slate-200'
-                }`}
-              >
-                {item}
-              </button>
-            ))}
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20"
-            >
-              Contact Us
-            </button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-slate-800"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X className="text-slate-900" /> : <Menu className={isScrolled ? 'text-slate-900' : 'text-white'} />}
-          </button>
-        </div>
-
-        {/* Mobile Menu Overlay */}
-        {isMobileMenuOpen && (
-          <div className="absolute top-full left-0 w-full bg-white border-t border-slate-100 shadow-xl py-4 px-6 flex flex-col gap-4 md:hidden">
-            {['Services', 'Process', 'Why Us', 'Contact'].map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))}
-                className="text-left text-slate-600 font-medium py-2 border-b border-slate-50"
-              >
-                {item}
-              </button>
-            ))}
-            <button onClick={() => scrollToSection('contact')} className="w-full py-3 bg-blue-600 text-white rounded font-medium">
-              Contact Us
-            </button>
-          </div>
-        )}
-      </nav>
-
-      {/* Hero Section */}
-      <header className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
-            alt="Shanghai Skyline Modern Architecture"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-slate-900/60 gradient-to-b from-slate-900/80 to-transparent"></div>
-        </div>
-
-        <div className="container mx-auto px-6 relative z-10 pt-20">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/90 backdrop-blur-sm border border-white/20 text-xs font-medium mb-6 uppercase tracking-wider">
-              <MapPin size={12} /> Based in Shanghai, Serving the World
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
-              Your Reliable Port <br />
-              <span className="text-blue-400">For Global Sourcing</span>
-            </h1>
-            <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-              Paxport bridges the gap between Western businesses and Chinese manufacturing. 
-              Where top talent gathers to secure your supply chain from Shanghai to the world.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button 
-                onClick={() => scrollToSection('services')}
-                className="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white font-medium rounded hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/50 flex items-center justify-center gap-2"
-              >
-                Explore Services <ArrowRight size={18} />
-              </button>
-              <button 
-                onClick={() => scrollToSection('contact')}
-                className="w-full sm:w-auto px-8 py-4 bg-white/10 text-white backdrop-blur-sm border border-white/20 font-medium rounded hover:bg-white/20 transition-all"
-              >
-                Contact Us
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/50">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
-          </svg>
-        </div>
-      </header>
-
-      {/* Stats Section */}
-      <section className="py-12 bg-white border-b border-slate-100">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-slate-100">
-            {[
-              { label: "Years Experience", value: "10+" },
-              { label: "Factories Audited", value: "500+" },
-              { label: "Orders Shipped", value: "2K+" },
-              { label: "Client Satisfaction", value: "98%" },
-            ].map((stat, idx) => (
-              <div key={idx} className={`text-center ${idx % 2 !== 0 ? 'border-l md:border-l-0 border-slate-100 pl-4 md:pl-0' : ''}`}>
-                <div className="text-3xl md:text-4xl font-bold text-slate-900 mb-1">{stat.value}</div>
-                <div className="text-sm text-slate-500 uppercase tracking-wide">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Value Proposition / Why Us */}
-      <section id="why-us" className="py-24 bg-slate-50">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2">Why Choose Paxport</h2>
-              <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Western Standards, Local Expertise.</h3>
-              <p className="text-slate-600 mb-8 leading-relaxed">
-                Sourcing from China can be complex. Paxport acts as your dedicated harbor in Shanghai, 
-                gathering the best talent to ensure your interests are protected at every step.
-              </p>
-              
-              <div className="space-y-6">
-                {[
-                  { icon: <Globe className="text-blue-600" />, title: "Native Communication", desc: "Our team speaks fluent English and understands Western business culture." },
-                  { icon: <MapPin className="text-blue-600" />, title: "Strategic Location", desc: "Located in Shanghai, the heart of global trade, giving us rapid access to key manufacturing hubs." },
-                  { icon: <ShieldCheck className="text-blue-600" />, title: "Risk Mitigation", desc: "Strict verification of suppliers and rigorous contracts to protect your capital." }
-                ].map((item, idx) => (
-                  <div key={idx} className="flex gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center border border-slate-100">
-                      {item.icon}
+            return (
+                <div className="flex items-center gap-2.5 cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
+                {!imageError ? (
+                    <img 
+                    src={logoUrl} 
+                    alt="Paxport - Your Reliable Port" 
+                    className="h-10 md:h-12 w-auto object-contain" 
+                    onError={() => setImageError(true)} 
+                    />
+                ) : (
+                    <React.Fragment>
+                    <div className={`w-9 h-9 bg-blue-600 text-white flex items-center justify-center rounded-lg shadow-md shadow-blue-600/20 ${className}`}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 4C6 2.89543 6.89543 2 8 2H12C15.866 2 19 5.13401 19 9C19 12.866 15.866 16 12 16H10V20C10 21.1046 9.10457 22 8 22C6.89543 22 6 21.1046 6 20V4Z" fill="currentColor" fillOpacity="0.9"/>
+                        <path d="M10 16H12C14.5 16 16.5 14 16.5 11.5" stroke="white" strokeOpacity="0.3" strokeWidth="1.5" strokeLinecap="round"/>
+                        </svg>
                     </div>
-                    <div>
-                      <h4 className="font-bold text-slate-900">{item.title}</h4>
-                      <p className="text-sm text-slate-500 mt-1">{item.desc}</p>
+                    <span className={`text-xl font-bold tracking-wide ${textClass} transition-colors`}>
+                        PAXPORT
+                    </span>
+                    </React.Fragment>
+                )}
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+            // Handle scroll effect
+            useEffect(() => {
+                const handleScroll = () => {
+                    setIsScrolled(window.scrollY > 50);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            // Initialize Lucide icons on render
+            useEffect(() => {
+                lucide.createIcons();
+            });
+
+            const scrollToSection = (id) => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+                setIsMobileMenuOpen(false);
+            };
+
+            return (
+                <div className="font-sans text-slate-800 bg-white antialiased selection:bg-blue-100 selection:text-blue-900">
+                {/* Navigation */}
+                <nav
+                    className={`fixed w-full z-50 transition-all duration-300 ${
+                    isScrolled ? 'bg-white/95 backdrop-blur-md shadow-sm py-4' : 'bg-transparent py-6'
+                    }`}
+                >
+                    <div className="container mx-auto px-6 flex justify-between items-center">
+                    {/* Logo */}
+                    <PaxportLogo 
+                        className="" 
+                        textClass={isScrolled ? 'text-slate-900' : 'text-white'} 
+                    />
+
+                    {/* Desktop Menu */}
+                    <div className="hidden md:flex items-center gap-8">
+                        {['Services', 'Process', 'Why Us', 'Contact'].map((item) => (
+                        <button
+                            key={item}
+                            onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))}
+                            className={`text-sm font-medium hover:text-blue-500 transition-colors ${
+                            isScrolled ? 'text-slate-600' : 'text-slate-200'
+                            }`}
+                        >
+                            {item}
+                        </button>
+                        ))}
+                        <button 
+                        onClick={() => scrollToSection('contact')}
+                        className="px-5 py-2.5 bg-blue-600 text-white text-sm font-medium rounded hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20"
+                        >
+                        Contact Us
+                        </button>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="relative">
-              <div className="absolute -inset-4 bg-blue-100 rounded-lg transform rotate-3"></div>
-              <img 
-                src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1632&q=80" 
-                alt="Business Meeting" 
-                className="relative rounded-lg shadow-xl w-full"
-              />
-              <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded shadow-lg max-w-xs hidden md:block">
-                <p className="font-serif italic text-slate-600">"Paxport simplified our supply chain and reduced our costs by 20% within the first quarter."</p>
-                <div className="mt-4 flex items-center gap-2">
-                  <div className="w-8 h-8 bg-slate-200 rounded-full"></div>
-                  <span className="text-sm font-bold text-slate-900">Mark D. <span className="font-normal text-slate-500">/ CEO, TechFlow USA</span></span>
+
+                    {/* Mobile Menu Button */}
+                    <button
+                        className="md:hidden text-slate-800"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    >
+                        {isMobileMenuOpen ? <X className="text-slate-900" /> : <Menu className={isScrolled ? 'text-slate-900' : 'text-white'} />}
+                    </button>
+                    </div>
+
+                    {/* Mobile Menu Overlay */}
+                    {isMobileMenuOpen && (
+                    <div className="absolute top-full left-0 w-full bg-white border-t border-slate-100 shadow-xl py-4 px-6 flex flex-col gap-4 md:hidden">
+                        {['Services', 'Process', 'Why Us', 'Contact'].map((item) => (
+                        <button
+                            key={item}
+                            onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))}
+                            className="text-left text-slate-600 font-medium py-2 border-b border-slate-50"
+                        >
+                            {item}
+                        </button>
+                        ))}
+                        <button onClick={() => scrollToSection('contact')} className="w-full py-3 bg-blue-600 text-white rounded font-medium">
+                        Contact Us
+                        </button>
+                    </div>
+                    )}
+                </nav>
+
+                {/* Hero Section */}
+                <header className="relative h-screen flex items-center justify-center overflow-hidden">
+                    <div className="absolute inset-0 z-0">
+                    <img
+                        src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+                        alt="Shanghai Skyline Modern Architecture"
+                        className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-slate-900/60 gradient-to-b from-slate-900/80 to-transparent"></div>
+                    </div>
+
+                    <div className="container mx-auto px-6 relative z-10 pt-20">
+                    <div className="max-w-4xl mx-auto text-center">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white/90 backdrop-blur-sm border border-white/20 text-xs font-medium mb-6 uppercase tracking-wider">
+                        <MapPin size={12} /> Based in Shanghai, Serving the World
+                        </div>
+                        <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+                        Your Reliable Port <br />
+                        <span className="text-blue-400">For Global Sourcing</span>
+                        </h1>
+                        <p className="text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+                        Paxport bridges the gap between Western businesses and Chinese manufacturing. 
+                        Where top talent gathers to secure your supply chain from Shanghai to the world.
+                        </p>
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <button 
+                            onClick={() => scrollToSection('services')}
+                            className="w-full sm:w-auto px-8 py-4 bg-blue-600 text-white font-medium rounded hover:bg-blue-500 transition-all shadow-lg shadow-blue-900/50 flex items-center justify-center gap-2"
+                        >
+                            Explore Services <ArrowRight size={18} />
+                        </button>
+                        <button 
+                            onClick={() => scrollToSection('contact')}
+                            className="w-full sm:w-auto px-8 py-4 bg-white/10 text-white backdrop-blur-sm border border-white/20 font-medium rounded hover:bg-white/20 transition-all"
+                        >
+                            Contact Us
+                        </button>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    {/* Scroll Indicator */}
+                    <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/50">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+                        </svg>
+                    </div>
+                </header>
+
+                {/* Stats Section */}
+                <section className="py-12 bg-white border-b border-slate-100">
+                    <div className="container mx-auto px-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-slate-100">
+                        {[
+                        { label: "Years Experience", value: "10+" },
+                        { label: "Factories Audited", value: "500+" },
+                        { label: "Orders Shipped", value: "2K+" },
+                        { label: "Client Satisfaction", value: "98%" },
+                        ].map((stat, idx) => (
+                        <div key={idx} className={`text-center ${idx % 2 !== 0 ? 'border-l md:border-l-0 border-slate-100 pl-4 md:pl-0' : ''}`}>
+                            <div className="text-3xl md:text-4xl font-bold text-slate-900 mb-1">{stat.value}</div>
+                            <div className="text-sm text-slate-500 uppercase tracking-wide">{stat.label}</div>
+                        </div>
+                        ))}
+                    </div>
+                    </div>
+                </section>
+
+                {/* Value Proposition / Why Us */}
+                <section id="why-us" className="py-24 bg-slate-50">
+                    <div className="container mx-auto px-6">
+                    <div className="grid md:grid-cols-2 gap-16 items-center">
+                        <div>
+                        <h2 className="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2">Why Choose Paxport</h2>
+                        <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6">Western Standards, Local Expertise.</h3>
+                        <p className="text-slate-600 mb-8 leading-relaxed">
+                            Sourcing from China can be complex. Paxport acts as your dedicated harbor in Shanghai, 
+                            gathering the best talent to ensure your interests are protected at every step.
+                        </p>
+                        
+                        <div className="space-y-6">
+                            {[
+                            { icon: <Globe className="text-blue-600" />, title: "Native Communication", desc: "Our team speaks fluent English and understands Western business culture." },
+                            { icon: <MapPin className="text-blue-600" />, title: "Strategic Location", desc: "Located in Shanghai, the heart of global trade, giving us rapid access to key manufacturing hubs." },
+                            { icon: <ShieldCheck className="text-blue-600" />, title: "Risk Mitigation", desc: "Strict verification of suppliers and rigorous contracts to protect your capital." }
+                            ].map((item, idx) => (
+                            <div key={idx} className="flex gap-4">
+                                <div className="flex-shrink-0 w-12 h-12 bg-white rounded-full shadow-sm flex items-center justify-center border border-slate-100">
+                                {item.icon}
+                                </div>
+                                <div>
+                                <h4 className="font-bold text-slate-900">{item.title}</h4>
+                                <p className="text-sm text-slate-500 mt-1">{item.desc}</p>
+                                </div>
+                            </div>
+                            ))}
+                        </div>
+                        </div>
+                        <div className="relative">
+                        <div className="absolute -inset-4 bg-blue-100 rounded-lg transform rotate-3"></div>
+                        <img 
+                            src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1632&q=80" 
+                            alt="Business Meeting" 
+                            className="relative rounded-lg shadow-xl w-full"
+                        />
+                        <div className="absolute -bottom-6 -left-6 bg-white p-6 rounded shadow-lg max-w-xs hidden md:block">
+                            <p className="font-serif italic text-slate-600">"Paxport simplified our supply chain and reduced our costs by 20% within the first quarter."</p>
+                            <div className="mt-4 flex items-center gap-2">
+                            <div className="w-8 h-8 bg-slate-200 rounded-full"></div>
+                            <span className="text-sm font-bold text-slate-900">Mark D. <span className="font-normal text-slate-500">/ CEO, TechFlow USA</span></span>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+
+                {/* Services Grid */}
+                <section id="services" className="py-24 bg-white">
+                    <div className="container mx-auto px-6 text-center max-w-3xl mb-16">
+                    <h2 className="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2">Our Expertise</h2>
+                    <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">End-to-End Procurement Solutions</h3>
+                    <p className="text-slate-600">
+                        Whether you need product sourcing, factory audits, or logistics management, we handle the heavy lifting so you can focus on sales.
+                    </p>
+                    </div>
+
+                    <div className="container mx-auto px-6">
+                    <div className="grid md:grid-cols-3 gap-8">
+                        {/* Service 1 */}
+                        <div className="group p-8 border border-slate-100 rounded-xl hover:shadow-xl hover:border-blue-100 transition-all duration-300 bg-slate-50/50 hover:bg-white">
+                        <div className="w-14 h-14 bg-blue-600 text-white rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <Search size={28} />
+                        </div>
+                        <h4 className="text-xl font-bold text-slate-900 mb-3">Sourcing & Negotiation</h4>
+                        <p className="text-slate-500 mb-6 leading-relaxed">
+                            We identify reliable manufacturers, not just traders. We negotiate the best prices and terms using our local leverage.
+                        </p>
+                        <ul className="space-y-2">
+                            {['Supplier Verification', 'Price Benchmarking', 'Sample Consolidation'].map(i => (
+                            <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
+                                <CheckCircle size={14} className="text-blue-500" /> {i}
+                            </li>
+                            ))}
+                        </ul>
+                        </div>
+
+                        {/* Service 2 */}
+                        <div className="group p-8 border border-slate-100 rounded-xl hover:shadow-xl hover:border-blue-100 transition-all duration-300 bg-slate-50/50 hover:bg-white">
+                        <div className="w-14 h-14 bg-indigo-600 text-white rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <ShieldCheck size={28} />
+                        </div>
+                        <h4 className="text-xl font-bold text-slate-900 mb-3">Quality Control</h4>
+                        <p className="text-slate-500 mb-6 leading-relaxed">
+                            Never pay for defective goods again. Our inspectors visit the factory floor to ensure your specifications are met.
+                        </p>
+                        <ul className="space-y-2">
+                            {['Pre-production Inspection', 'During Production Check', 'Pre-shipment Inspection'].map(i => (
+                            <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
+                                <CheckCircle size={14} className="text-indigo-500" /> {i}
+                            </li>
+                            ))}
+                        </ul>
+                        </div>
+
+                        {/* Service 3 */}
+                        <div className="group p-8 border border-slate-100 rounded-xl hover:shadow-xl hover:border-blue-100 transition-all duration-300 bg-slate-50/50 hover:bg-white">
+                        <div className="w-14 h-14 bg-slate-800 text-white rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                            <Ship size={28} />
+                        </div>
+                        <h4 className="text-xl font-bold text-slate-900 mb-3">Logistics & Shipping</h4>
+                        <p className="text-slate-500 mb-6 leading-relaxed">
+                            From the factory door to your warehouse. We handle export documentation, customs clearance, and freight booking.
+                        </p>
+                        <ul className="space-y-2">
+                            {['FOB/CIF/DDP Services', 'Container Consolidation', 'Customs Documentation'].map(i => (
+                            <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
+                                <CheckCircle size={14} className="text-slate-600" /> {i}
+                            </li>
+                            ))}
+                        </ul>
+                        </div>
+                    </div>
+                    </div>
+                </section>
+
+                {/* Process Section */}
+                <section id="process" className="py-24 bg-slate-900 text-white">
+                    <div className="container mx-auto px-6">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-16">
+                        <div className="max-w-2xl">
+                        <h2 className="text-sm font-bold text-blue-400 uppercase tracking-wider mb-2">How It Works</h2>
+                        <h3 className="text-3xl md:text-4xl font-bold mb-4">A Streamlined Workflow</h3>
+                        <p className="text-slate-400">We've refined our process over a decade to ensure transparency and speed.</p>
+                        </div>
+                        <button 
+                        onClick={() => scrollToSection('contact')}
+                        className="hidden md:flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium mt-4 md:mt-0"
+                        >
+                        Start your project <ArrowRight size={16} />
+                        </button>
+                    </div>
+
+                    <div className="grid md:grid-cols-4 gap-8 relative">
+                        {/* Connecting Line (Desktop only) */}
+                        <div className="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-slate-800 z-0"></div>
+
+                        {[
+                        { step: "01", title: "Requirement", desc: "You send us your product specs or concept." },
+                        { step: "02", title: "Sourcing", desc: "We find suppliers and provide detailed quotes." },
+                        { step: "03", title: "Production", desc: "We manage sampling and oversee manufacturing." },
+                        { step: "04", title: "Delivery", desc: "QC inspection followed by global shipping." },
+                        ].map((item, idx) => (
+                        <div key={idx} className="relative z-10">
+                            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-blue-900/50 border-4 border-slate-900">
+                            {item.step}
+                            </div>
+                            <h4 className="text-xl font-bold mb-2">{item.title}</h4>
+                            <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
+                        </div>
+                        ))}
+                    </div>
+                    </div>
+                </section>
+
+                {/* Contact / CTA Section - Horizontal Layout */}
+                <section id="contact" className="py-24 bg-slate-50">
+                    <div className="container mx-auto px-6">
+                    <div className="bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-800 p-12 text-white">
+                        
+                        <div className="text-center mb-12">
+                        <h3 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h3>
+                        <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+                            Ready to streamline your procurement? Reach out to us directly through any of the channels below.
+                        </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-8 mb-12">
+                        {/* Office */}
+                        <div className="flex flex-col items-center text-center p-8 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors border border-slate-700/50">
+                            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-900/50">
+                            <MapPin size={28} />
+                            </div>
+                            <h5 className="font-bold text-xl mb-3">Headquarters</h5>
+                            <p className="text-slate-400 leading-relaxed">
+                            Floor 24, Shanghai Tower,<br/>
+                            Lujiazui, Pudong New District,<br/>
+                            Shanghai, China
+                            </p>
+                        </div>
+
+                        {/* Email */}
+                        <div className="flex flex-col items-center text-center p-8 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors border border-slate-700/50">
+                            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-900/50">
+                            <Mail size={28} />
+                            </div>
+                            <h5 className="font-bold text-xl mb-3">Email Us</h5>
+                            <p className="text-slate-400 mb-3">inquiry@paxport.com</p>
+                            <a href="mailto:inquiry@paxport.com" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors">
+                            Send an email <ArrowRight size={14} />
+                            </a>
+                        </div>
+
+                        {/* Phone */}
+                        <div className="flex flex-col items-center text-center p-8 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors border border-slate-700/50">
+                            <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-900/50">
+                            <Phone size={28} />
+                            </div>
+                            <h5 className="font-bold text-xl mb-3">Call / WhatsApp</h5>
+                            <p className="text-slate-400 mb-2">+86 21 1234 5678</p>
+                            <p className="text-sm text-slate-500">Mon-Fri, 9am - 6pm (GMT+8)</p>
+                        </div>
+                        </div>
+                        
+                        <div className="border-t border-slate-800 pt-8 flex flex-col items-center">
+                        <p className="text-xs text-slate-500 uppercase tracking-widest mb-6 font-semibold">Follow Our Updates</p>
+                        <div className="flex gap-6">
+                            <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all cursor-pointer text-slate-400 hover:text-white border border-slate-700 hover:border-blue-500">
+                            <span className="font-bold">in</span>
+                            </div>
+                            <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all cursor-pointer text-slate-400 hover:text-white border border-slate-700 hover:border-blue-500">
+                            <span className="font-bold">f</span>
+                            </div>
+                            <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all cursor-pointer text-slate-400 hover:text-white border border-slate-700 hover:border-blue-500">
+                            <span className="font-bold">tw</span>
+                            </div>
+                        </div>
+                        </div>
+
+                    </div>
+                    </div>
+                </section>
+
+                {/* Simple Footer */}
+                <footer className="bg-white py-12 border-t border-slate-100">
+                    <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <PaxportLogo className="bg-slate-900" textClass="text-slate-900" />
+                    <div className="text-sm text-slate-500">
+                        &copy; {new Date().getFullYear()} Paxport Co., Ltd. All rights reserved.
+                    </div>
+                    <div className="flex gap-6 text-sm text-slate-600 font-medium">
+                        <a href="#" className="hover:text-blue-600">Privacy Policy</a>
+                        <a href="#" className="hover:text-blue-600">Terms of Service</a>
+                    </div>
+                    </div>
+                </footer>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+            );
+        };
 
-      {/* Services Grid */}
-      <section id="services" className="py-24 bg-white">
-        <div className="container mx-auto px-6 text-center max-w-3xl mb-16">
-          <h2 className="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2">Our Expertise</h2>
-          <h3 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">End-to-End Procurement Solutions</h3>
-          <p className="text-slate-600">
-            Whether you need product sourcing, factory audits, or logistics management, we handle the heavy lifting so you can focus on sales.
-          </p>
-        </div>
-
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Service 1 */}
-            <div className="group p-8 border border-slate-100 rounded-xl hover:shadow-xl hover:border-blue-100 transition-all duration-300 bg-slate-50/50 hover:bg-white">
-              <div className="w-14 h-14 bg-blue-600 text-white rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Search size={28} />
-              </div>
-              <h4 className="text-xl font-bold text-slate-900 mb-3">Sourcing & Negotiation</h4>
-              <p className="text-slate-500 mb-6 leading-relaxed">
-                We identify reliable manufacturers, not just traders. We negotiate the best prices and terms using our local leverage.
-              </p>
-              <ul className="space-y-2">
-                {['Supplier Verification', 'Price Benchmarking', 'Sample Consolidation'].map(i => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
-                    <CheckCircle size={14} className="text-blue-500" /> {i}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Service 2 */}
-            <div className="group p-8 border border-slate-100 rounded-xl hover:shadow-xl hover:border-blue-100 transition-all duration-300 bg-slate-50/50 hover:bg-white">
-              <div className="w-14 h-14 bg-indigo-600 text-white rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <ShieldCheck size={28} />
-              </div>
-              <h4 className="text-xl font-bold text-slate-900 mb-3">Quality Control</h4>
-              <p className="text-slate-500 mb-6 leading-relaxed">
-                Never pay for defective goods again. Our inspectors visit the factory floor to ensure your specifications are met.
-              </p>
-              <ul className="space-y-2">
-                {['Pre-production Inspection', 'During Production Check', 'Pre-shipment Inspection'].map(i => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
-                    <CheckCircle size={14} className="text-indigo-500" /> {i}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Service 3 */}
-            <div className="group p-8 border border-slate-100 rounded-xl hover:shadow-xl hover:border-blue-100 transition-all duration-300 bg-slate-50/50 hover:bg-white">
-              <div className="w-14 h-14 bg-slate-800 text-white rounded-lg flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Ship size={28} />
-              </div>
-              <h4 className="text-xl font-bold text-slate-900 mb-3">Logistics & Shipping</h4>
-              <p className="text-slate-500 mb-6 leading-relaxed">
-                From the factory door to your warehouse. We handle export documentation, customs clearance, and freight booking.
-              </p>
-              <ul className="space-y-2">
-                {['FOB/CIF/DDP Services', 'Container Consolidation', 'Customs Documentation'].map(i => (
-                  <li key={i} className="flex items-center gap-2 text-sm text-slate-700">
-                    <CheckCircle size={14} className="text-slate-600" /> {i}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Process Section */}
-      <section id="process" className="py-24 bg-slate-900 text-white">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16">
-            <div className="max-w-2xl">
-              <h2 className="text-sm font-bold text-blue-400 uppercase tracking-wider mb-2">How It Works</h2>
-              <h3 className="text-3xl md:text-4xl font-bold mb-4">A Streamlined Workflow</h3>
-              <p className="text-slate-400">We've refined our process over a decade to ensure transparency and speed.</p>
-            </div>
-            <button 
-              onClick={() => scrollToSection('contact')}
-              className="hidden md:flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors font-medium mt-4 md:mt-0"
-            >
-              Start your project <ChevronRight size={16} />
-            </button>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-8 relative">
-            {/* Connecting Line (Desktop only) */}
-            <div className="hidden md:block absolute top-8 left-0 w-full h-0.5 bg-slate-800 z-0"></div>
-
-            {[
-              { step: "01", title: "Requirement", desc: "You send us your product specs or concept." },
-              { step: "02", title: "Sourcing", desc: "We find suppliers and provide detailed quotes." },
-              { step: "03", title: "Production", desc: "We manage sampling and oversee manufacturing." },
-              { step: "04", title: "Delivery", desc: "QC inspection followed by global shipping." },
-            ].map((item, idx) => (
-              <div key={idx} className="relative z-10">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-blue-900/50 border-4 border-slate-900">
-                  {item.step}
-                </div>
-                <h4 className="text-xl font-bold mb-2">{item.title}</h4>
-                <p className="text-slate-400 text-sm leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact / CTA Section - REDESIGNED: Horizontal Layout, No Form */}
-      <section id="contact" className="py-24 bg-slate-50">
-        <div className="container mx-auto px-6">
-          <div className="bg-slate-900 rounded-2xl shadow-xl overflow-hidden border border-slate-800 p-12 text-white">
-            
-            <div className="text-center mb-12">
-              <h3 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h3>
-              <p className="text-slate-400 max-w-2xl mx-auto text-lg">
-                Ready to streamline your procurement? Reach out to us directly through any of the channels below.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8 mb-12">
-              {/* Office */}
-              <div className="flex flex-col items-center text-center p-8 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors border border-slate-700/50">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-900/50">
-                   <MapPin size={28} />
-                </div>
-                <h5 className="font-bold text-xl mb-3">Headquarters</h5>
-                <p className="text-slate-400 leading-relaxed">
-                  Floor 24, Shanghai Tower,<br/>
-                  Lujiazui, Pudong New District,<br/>
-                  Shanghai, China
-                </p>
-              </div>
-
-              {/* Email */}
-              <div className="flex flex-col items-center text-center p-8 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors border border-slate-700/50">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-900/50">
-                   <Mail size={28} />
-                </div>
-                <h5 className="font-bold text-xl mb-3">Email Us</h5>
-                <p className="text-slate-400 mb-3">inquiry@paxport.com</p>
-                <a href="mailto:inquiry@paxport.com" className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors">
-                  Send an email <ArrowRight size={14} />
-                </a>
-              </div>
-
-              {/* Phone */}
-              <div className="flex flex-col items-center text-center p-8 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors border border-slate-700/50">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-6 text-white shadow-lg shadow-blue-900/50">
-                   <Phone size={28} />
-                </div>
-                <h5 className="font-bold text-xl mb-3">Call / WhatsApp</h5>
-                <p className="text-slate-400 mb-2">+86 21 1234 5678</p>
-                <p className="text-sm text-slate-500">Mon-Fri, 9am - 6pm (GMT+8)</p>
-              </div>
-            </div>
-            
-            <div className="border-t border-slate-800 pt-8 flex flex-col items-center">
-              <p className="text-xs text-slate-500 uppercase tracking-widest mb-6 font-semibold">Follow Our Updates</p>
-              <div className="flex gap-6">
-                <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all cursor-pointer text-slate-400 hover:text-white border border-slate-700 hover:border-blue-500">
-                  <span className="font-bold">in</span>
-                </div>
-                <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all cursor-pointer text-slate-400 hover:text-white border border-slate-700 hover:border-blue-500">
-                  <span className="font-bold">f</span>
-                </div>
-                <div className="w-12 h-12 bg-slate-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-all cursor-pointer text-slate-400 hover:text-white border border-slate-700 hover:border-blue-500">
-                  <span className="font-bold">tw</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Simple Footer */}
-      <footer className="bg-white py-12 border-t border-slate-100">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <PaxportLogo className="bg-slate-900" textClass="text-slate-900" />
-          <div className="text-sm text-slate-500">
-            &copy; {new Date().getFullYear()} Paxport Co., Ltd. All rights reserved.
-          </div>
-          <div className="flex gap-6 text-sm text-slate-600 font-medium">
-            <a href="#" className="hover:text-blue-600">Privacy Policy</a>
-            <a href="#" className="hover:text-blue-600">Terms of Service</a>
-          </div>
-        </div>
-      </footer>
-    </div>
-  );
-};
-
-export default App;
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
