@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+Disallow: /private/
+Disallow: /admin/
+Disallow: /temp/
+
+# Sitemap location
+Sitemap: https://www.paxporttrading.com/sitemap.xml
+
+# Crawl rate
+Crawl-delay: 1
+
+# Specific bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
