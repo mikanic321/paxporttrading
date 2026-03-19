@@ -1,61 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  
-  <!-- Homepage -->
-  <url>
-    <loc>https://www.paxporttrading.com/</loc>
-    <lastmod>2026-03-19</lastmod>
-    <priority>1.00</priority>
-    <changefreq>weekly</changefreq>
-    <image:image>
-      <image:loc>https://www.paxporttrading.com/鍏徃logo&slogan.jpg</image:loc>
-      <image:title>Paxport Trading - China Sourcing Agent Logo</image:title>
-      <image:caption>Professional China procurement service company logo</image:caption>
-    </image:image>
-  </url>
-  
-  <!-- Services Section -->
-  <url>
-    <loc>https://www.paxporttrading.com/#services</loc>
-    <lastmod>2026-03-19</lastmod>
-    <priority>0.90</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  
-  <!-- Industries Section -->
-  <url>
-    <loc>https://www.paxporttrading.com/#industries</loc>
-    <lastmod>2026-03-19</lastmod>
-    <priority>0.90</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  
-  <!-- Process Section -->
-  <url>
-    <loc>https://www.paxporttrading.com/#process</loc>
-    <lastmod>2026-03-19</lastmod>
-    <priority>0.80</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  
-  <!-- Why Us Section -->
-  <url>
-    <loc>https://www.paxporttrading.com/#why-us</loc>
-    <lastmod>2026-03-19</lastmod>
-    <priority>0.80</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  
-  <!-- Contact Section -->
-  <url>
-    <loc>https://www.paxporttrading.com/#contact</loc>
-    <lastmod>2026-03-19</lastmod>
-    <priority>0.85</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.paxporttrading.com/</loc><priority>1.0</priority></url>
+  <url><loc>https://www.paxporttrading.com/about.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.paxporttrading.com/services.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.paxporttrading.com/industries.html</loc><priority>0.8</priority></url>
+  <url><loc>https://www.paxporttrading.com/contact.html</loc><priority>0.9</priority></url>
 </urlset>
