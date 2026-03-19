@@ -49,10 +49,6 @@ html {
 
 /* Logo Container */
 .logo-container {
-    background: white;
-    border-radius: 0.5rem;
-    padding: 0.25rem;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     display: inline-flex;
     align-items: center;
 }
@@ -61,13 +57,23 @@ html {
     height: 2.5rem;
     width: auto;
     object-fit: contain;
-    border-radius: 0.25rem;
 }
 
 @media (min-width: 768px) {
     .logo-container img {
         height: 3rem;
     }
+}
+
+.logo-text {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    margin-left: 0.5rem;
+}
+
+.nav-scrolled .logo-text {
+    color: #0f172a;
 }
 
 /* Buttons */
