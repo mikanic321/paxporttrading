@@ -25,7 +25,7 @@ html {
     color: #1e3a8a;
 }
 
-/* Navigation */
+/* Navigation - Always white */
 .nav-fixed {
     position: fixed;
     top: 0;
@@ -33,16 +33,18 @@ html {
     right: 0;
     z-index: 50;
     transition: all 0.3s ease;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 1rem 0;
 }
 
 .nav-transparent {
-    background: transparent;
-    padding: 1.5rem 0;
+    background: white;
+    padding: 1rem 0;
 }
 
 .nav-scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: white;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     padding: 1rem 0;
 }
@@ -54,14 +56,14 @@ html {
 }
 
 .logo-container img {
-    height: 3rem;
+    height: 4rem;
     width: auto;
     object-fit: contain;
 }
 
 @media (min-width: 768px) {
     .logo-container img {
-        height: 3.5rem;
+        height: 5rem;
     }
 }
 
