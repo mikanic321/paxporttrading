@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping from China: FOB vs CIF vs DDP Explained (2026)</title>
+    <meta name="description" content="Complete guide to shipping incoterms from China. Understand FOB, CIF, DDP, and EXW. Learn which shipping term is best for your business and calculate landed costs.">
+    <meta name="keywords" content="FOB CIF DDP, shipping from China, incoterms 2026, China shipping terms, FOB vs CIF, DDP shipping China">
+    <link rel="canonical" href="https://paxporttrading.com/blog/shipping-from-china-fob-cif-ddp-explained.html">
+    <meta property="og:title" content="Shipping from China: FOB vs CIF vs DDP Explained">
+    <meta property="og:description" content="Complete guide to shipping incoterms from China. Choose the best shipping term for your business.">
+    <meta property="og:url" content="https://paxporttrading.com/blog/shipping-from-china-fob-cif-ddp-explained.html">
+    <meta property="og:type" content="article">
+    <meta property="article:published_time" content="2026-03-15">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        nav {
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2563eb;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: #2563eb; }
+        .article-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+        .article-header h1 {
+            font-size: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto 1rem;
+            line-height: 1.3;
+        }
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            background: white;
+        }
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+        }
+        .article-content h2 {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            margin: 2.5rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #4facfe;
+        }
+        .article-content h3 {
+            font-size: 1.4rem;
+            color: #333;
+            margin: 2rem 0 1rem;
+        }
+        .article-content p {
+            margin-bottom: 1.5rem;
+            color: #444;
+        }
+        .article-content ul, .article-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+        .article-content li {
+            margin-bottom: 0.75rem;
+        }
+        .toc {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border-left: 4px solid #4facfe;
+        }
+        .toc h3 {
+            margin-top: 0;
+            color: #4facfe;
+        }
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .toc li {
+            padding: 0.5rem 0;
+        }
+        .toc a {
+            color: #555;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            color: #4facfe;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+        }
+        .comparison-table th {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        .comparison-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #4facfe15 0%, #00f2fe15 100%);
+            border-left: 4px solid #4facfe;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .highlight-box h4 {
+            color: #4facfe;
+            margin-bottom: 0.75rem;
+        }
+        .cost-calculator {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        .cost-calculator h4 {
+            color: #2563eb;
+            margin-bottom: 1rem;
+        }
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .cost-item.total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #2563eb;
+            border-top: 2px solid #2563eb;
+            border-bottom: none;
+            margin-top: 0.5rem;
+            padding-top: 1rem;
+        }
+        .recommendation-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s;
+        }
+        .recommendation-card:hover {
+            border-color: #4facfe;
+            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.15);
+        }
+        .recommendation-card h4 {
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+        .recommendation-card.best {
+            border-color: #28a745;
+            background: #f0fff4;
+        }
+        .recommendation-card.best h4 {
+            color: #28a745;
+        }
+        .cta-section {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 3rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+        .cta-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #4facfe;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 1rem;
+        }
+        .author-box {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 3rem 0;
+        }
+        .author-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+        .footer-section a {
+            color: #aaa;
+            text-decoration: none;
+            display: block;
+            padding: 0.25rem 0;
+        }
+        .footer-section a:hover {
+            color: white;
+        }
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+        @media (max-width: 768px) {
+            .article-header h1 {
+                font-size: 1.8rem;
+            }
+            .nav-links {
+                display: none;
+            }
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">Paxport</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../services.html">Services</a></li>
+                <li><a href="../industries.html">Industries</a></li>
+                <li><a href="../blog.html">Blog</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header class="article-header">
+        <h1>Shipping from China: FOB vs CIF vs DDP Explained (2026)</h1>
+        <div class="article-meta">
+            <span>📅 March 15, 2026</span>
+            <span>⏱️ 12 min read</span>
+            <span>👤 Paxport Logistics Team</span>
+        </div>
+    </header>
+
+    <article class="article-container">
+        <div class="article-content">
+            <p><strong>Choosing the wrong shipping term can cost you thousands of dollars.</strong> Whether you're a first-time importer or experienced trader, understanding Incoterms is crucial for calculating true landed costs and avoiding unexpected expenses.</p>
+
+            <p>In this comprehensive guide, we'll break down the most common shipping terms for China imports – <strong>FOB, CIF, DDP, and EXW</strong> – with real cost examples to help you make the right choice for your business.</p>
+
+            <div class="toc">
+                <h3>Table of Contents</h3>
+                <ul>
+                    <li><a href="#what-are">What Are Incoterms?</a></li>
+                    <li><a href="#fob">FOB (Free On Board) Explained</a></li>
+                    <li><a href="#cif">CIF (Cost, Insurance, Freight) Explained</a></li>
+                    <li><a href="#ddp">DDP (Delivered Duty Paid) Explained</a></li>
+                    <li><a href="#exw">EXW (Ex Works) Explained</a></li>
+                    <li><a href="#comparison">Quick Comparison Table</a></li>
+                    <li><a href="#which-to-choose">Which Should You Choose?</a></li>
+                    <li><a href="#costs">Hidden Costs to Watch For</a></li>
+                </ul>
+            </div>
+
+            <h2 id="what-are">What Are Incoterms?</h2>
+            <p><strong>Incoterms (International Commercial Terms)</strong> are standardized trade terms published by the International Chamber of Commerce (ICC). They define:</p>
+            <ul>
+                <li>Who pays for transportation at each stage</li>
+                <li>When responsibility transfers from seller to buyer</li>
+                <li>Who handles customs clearance and documentation</li>
+                <li>Where risk transfers between parties</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>💡 Why Incoterms Matter</h4>
+                <p>Using the wrong Incoterm can lead to:</p>
+                <ul>
+                    <li>Unexpected costs of $500-2,000 per shipment</li>
+                    <li>Customs clearance delays</li>
+                    <li>Disputes over damaged goods</li>
+                    <li>Cash flow problems from surprise charges</li>
+                </ul>
+            </div>
+
+            <h2 id="fob">FOB (Free On Board) - Most Popular for China</h2>
+            <p><strong>Best for:</strong> Experienced importers with established freight forwarders</p>
+
+            <h3>What FOB Means</h3>
+            <p>The supplier delivers goods to the port of shipment, clears export customs, and loads the cargo onto the vessel. From that point, you (the buyer) take responsibility.</p>
+
+            <h3>Supplier Responsibilities (FOB)</h3>
+            <ul>
+                <li>Manufacturing the goods</li>
+                <li>Inland transportation to port</li>
+                <li>Export customs clearance</li>
+                <li>Port handling charges (origin)</li>
+                <li>Loading goods onto vessel</li>
+            </ul>
+
+            <h3>Your Responsibilities (FOB)</h3>
+            <ul>
+                <li>International freight (ocean/air)</li>
+                <li>Insurance (optional but recommended)</li>
+                <li>Import customs clearance</li>
+                <li>Import duties and taxes</li>
+                <li>Inland transportation to your warehouse</li>
+            </ul>
+
+            <div class="cost-calculator">
+                <h4>📊 FOB Cost Breakdown Example ($10,000 order)</h4>
+                <div class="cost-item">
+                    <span>Product cost (FOB)</span>
+                    <span>$10,000</span>
+                </div>
+                <div class="cost-item">
+                    <span>Ocean freight to USA</span>
+                    <span>$1,200</span>
+                </div>
+                <div class="cost-item">
+                    <span>Insurance (0.3%)</span>
+                    <span>$30</span>
+                </div>
+                <div class="cost-item">
+                    <span>Import duties (25%)</span>
+                    <span>$2,500</span>
+                </div>
+                <div class="cost-item">
+                    <span>Customs clearance</span>
+                    <span>$150</span>
+                </div>
+                <div class="cost-item">
+                    <span>Local delivery</span>
+                    <span>$300</span>
+                </div>
+                <div class="cost-item total">
+                    <span>Total Landed Cost</span>
+                    <span>$14,180</span>
+                </div>
+            </div>
+
+            <h3>✅ FOB Pros</h3>
+            <ul>
+                <li>Full control over shipping and freight forwarder</li>
+                <li>Often cheaper than CIF/DDP for large shipments</li>
+                <li>Transparent costs - you see exactly what you're paying</li>
+                <li>Can negotiate better freight rates directly</li>
+            </ul>
+
+            <h3>❌ FOB Cons</h3>
+            <ul>
+                <li>More work - you coordinate everything</li>
+                <li>Need reliable freight forwarder</li>
+                <li>Responsible for any shipping issues</li>
+                <li>Must understand import procedures</li>
+            </ul>
+
+            <h2 id="cif">CIF (Cost, Insurance, Freight)</h2>
+            <p><strong>Best for:</strong> New importers who want simplicity</p>
+
+            <h3>What CIF Means</h3>
+            <p>The supplier pays for goods, international freight, and insurance to your destination port. You take responsibility once goods arrive at the port.</p>
+
+            <h3>Supplier Responsibilities (CIF)</h3>
+            <ul>
+                <li>Everything in FOB, plus:</li>
+                <li>International freight to destination port</li>
+                <li>Marine insurance</li>
+            </ul>
+
+            <h3>Your Responsibilities (CIF)</h3>
+            <ul>
+                <li>Import customs clearance</li>
+                <li>Import duties and taxes</li>
+                <li>Port handling charges (destination)</li>
+                <li>Inland transportation from port</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>⚠️ CIF Warning</h4>
+                <p>Suppliers often use the cheapest shipping option with CIF, which means:</p>
+                <ul>
+                    <li>Longer transit times</li>
+                    <li>Less reliable carriers</li>
+                    <li>Minimal insurance coverage</li>
+                </ul>
+                <p><strong>Always specify shipping requirements in your contract.</strong></p>
+            </div>
+
+            <h2 id="ddp">DDP (Delivered Duty Paid) - Door-to-Door</h2>
+            <p><strong>Best for:</strong> Amazon FBA sellers, small businesses, first-time importers</p>
+
+            <h3>What DDP Means</h3>
+            <p>The supplier handles everything - from factory to your door, including all shipping, customs, duties, and taxes. You pay one price and receive goods at your warehouse.</p>
+
+            <h3>Supplier Responsibilities (DDP)</h3>
+            <ul>
+                <li>Everything - literally everything</li>
+                <li>Manufacturing</li>
+                <li>All transportation</li>
+                <li>Export and import customs</li>
+                <li>All duties and taxes</li>
+                <li>Door delivery</li>
+            </ul>
+
+            <h3>Your Responsibilities (DDP)</h3>
+            <ul>
+                <li>Receiving the goods</li>
+                <li>Unloading (if not specified)</li>
+            </ul>
+
+            <div class="cost-calculator">
+                <h4>📊 DDP Cost Example ($10,000 order)</h4>
+                <div class="cost-item">
+                    <span>Product cost (DDP)</span>
+                    <span>$13,500</span>
+                </div>
+                <div class="cost-item total">
+                    <span>Total Landed Cost</span>
+                    <span>$13,500</span>
+                </div>
+                <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">* One all-inclusive price. No surprises, no additional bills.</p>
+            </div>
+
+            <h3>✅ DDP Pros</h3>
+            <ul>
+                <li>Simplest option - one price, no surprises</li>
+                <li>No customs clearance knowledge needed</li>
+                <li>Perfect for Amazon FBA deliveries</li>
+                <li>Easier cash flow planning</li>
+                <li>Supplier handles all problems</li>
+            </ul>
+
+            <h3>❌ DDP Cons</h3>
+            <ul>
+                <li>Higher total cost (supplier adds markup)</li>
+                <li>Less control over shipping</li>
+                <li>Harder to verify actual costs</li>
+                <li>Not all suppliers offer DDP</li>
+            </ul>
+
+            <h2 id="exw">EXW (Ex Works) - For Experts Only</h2>
+            <p><strong>Best for:</strong> Large companies with China offices or very experienced importers</p>
+
+            <h3>What EXW Means</h3>
+            <p>You handle absolutely everything from the supplier's factory door. This gives maximum control but requires significant logistics expertise in China.</p>
+
+            <h3>Your Responsibilities (EXW)</h3>
+            <ul>
+                <li>Pickup from factory</li>
+                <li>Export customs clearance</li>
+                <li>All transportation</li>
+                <li>Import customs and duties</li>
+                <li>Everything else</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h4>⚠️ EXW Warning</h4>
+                <p>EXW requires you to handle export customs in China, which is extremely difficult without:</p>
+                <ul>
+                    <li>A Chinese business entity</li>
+                    <li>Export license</li>
+                    <li>Local logistics team</li>
+                </ul>
+                <p><strong>Not recommended for 99% of importers.</strong></p>
+            </div>
+
+            <h2 id="comparison">Quick Comparison Table</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Factor</th>
+                        <th>FOB</th>
+                        <th>CIF</th>
+                        <th>DDP</th>
+                        <th>EXW</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Control</strong></td>
+                        <td>High</td>
+                        <td>Medium</td>
+                        <td>Low</td>
+                        <td>Maximum</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Complexity</strong></td>
+                        <td>Medium</td>
+                        <td>Low</td>
+                        <td>Lowest</td>
+                        <td>Highest</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cost Transparency</strong></td>
+                        <td>High</td>
+                        <td>Medium</td>
+                        <td>Low</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best For</strong></td>
+                        <td>Experienced</td>
+                        <td>Beginners</td>
+                        <td>Amazon FBA</td>
+                        <td>Experts only</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Risk Level</strong></td>
+                        <td>Medium</td>
+                        <td>Low</td>
+                        <td>Lowest</td>
+                        <td>Highest</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 id="which-to-choose">Which Should You Choose?</h2>
+
+            <div class="recommendation-card best">
+                <h4>🏆 Best for Most Importers: FOB</h4>
+                <p>If you have a reliable freight forwarder, FOB offers the best balance of cost and control. You'll save 5-15% compared to CIF/DDP.</p>
+            </div>
+
+            <div class="recommendation-card">
+                <h4>📦 Best for Amazon FBA: DDP</h4>
+                <p>DDP delivers directly to Amazon warehouses with all customs cleared. No headaches, perfect for FBA sellers.</p>
+            </div>
+
+            <div class="recommendation-card">
+                <h4>🆕 Best for First-Time Importers: CIF or DDP</h4>
+                <p>Start with CIF or DDP to learn the process. Once comfortable, switch to FOB for better rates.</p>
+            </div>
+
+            <div class="recommendation-card">
+                <h4>🏭 Best for Large Volume: FOB or EXW</h4>
+                <p>High-volume importers benefit from negotiating their own freight contracts. Consider EXW only if you have China logistics expertise.</p>
+            </div>
+
+            <h2 id="costs">Hidden Costs to Watch For</h2>
+            <p>Regardless of which Incoterm you choose, watch out for these surprise charges:</p>
+
+            <h3>Origin Charges (China)</h3>
+            <ul>
+                <li><strong>Container loading fee:</strong> $50-150</li>
+                <li><strong>Documentation fee:</strong> $50-100</li>
+                <li><strong>Peak season surcharge:</strong> $200-500 (Aug-Oct)</li>
+                <li><strong>Chassis fee:</strong> $30-50/day</li>
+            </ul>
+
+            <h3>Destination Charges</h3>
+            <ul>
+                <li><strong>Port handling:</strong> $200-400</li>
+                <li><strong>Customs exam fee:</strong> $150-500 (if inspected)</li>
+                <li><strong>Storage/demurrage:</strong> $75-150/day</li>
+                <li><strong>Chassis split fee:</strong> $100-200</li>
+                <li><strong>ISF filing:</strong> $25-50 (USA)</li>
+            </ul>
+
+            <h3>Other Potential Costs</h3>
+            <ul>
+                <li><strong>Currency conversion:</strong> 1-3%</li>
+                <li><strong>Bank transfer fees:</strong> $20-50</li>
+                <li><strong>Insurance:</strong> 0.3-0.5% of goods value</li>
+                <li><strong>Customs bond:</strong> $100-500/year (USA)</li>
+            </ul>
+
+            <div class="cta-section">
+                <h3>Need Help with Shipping?</h3>
+                <p>Paxport handles FOB, CIF, and DDP shipments worldwide. We negotiate competitive rates and handle all documentation.</p>
+                <a href="../contact.html" class="cta-button">Get Shipping Quote →</a>
+            </div>
+
+            <div class="author-box">
+                <div class="author-avatar">L</div>
+                <div class="author-info">
+                    <h4>Paxport Logistics Team</h4>
+                    <p>Our logistics experts have managed 2,000+ shipments from China to 50+ countries. We specialize in finding the most cost-effective shipping solutions while ensuring on-time delivery.</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Paxport Trading</h4>
+                <p style="color: #aaa; margin-top: 0.5rem;">Your reliable China sourcing agent based in Shanghai. 10+ years experience, 500+ factories audited.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="../index.html">Home</a>
+                <a href="../about.html">About Us</a>
+                <a href="../services.html">Services</a>
+                <a href="../blog.html">Blog</a>
+                <a href="../contact.html">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h4>Services</h4>
+                <a href="../services.html">Supplier Sourcing</a>
+                <a href="../services.html">Quality Control</a>
+                <a href="../services.html">Logistics & Shipping</a>
+                <a href="../services.html">Product Development</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p style="color: #aaa;">Shanghai, China</p>
+                <p style="color: #aaa;">WhatsApp: +86 183 0199 1671</p>
+                <p style="color: #aaa;">Email: info@paxporttrading.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Paxport Trading Co., Ltd. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
