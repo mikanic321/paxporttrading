@@ -27,6 +27,13 @@
     <changefreq>monthly</changefreq>
   </url>
   
+  <!-- FAQ Page -->
+  <url>
+    <loc>https://paxporttrading.com/faq.html</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  
   <!-- Blog Pages -->
   <url>
     <loc>https://paxporttrading.com/blog.html</loc>
@@ -43,6 +50,12 @@
   </url>
   <url>
     <loc>https://paxporttrading.com/blog/how-to-negotiate-chinese-suppliers-guide.html</loc>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-03-21</lastmod>
+  </url>
+  <url>
+    <loc>https://paxporttrading.com/blog/alibaba-vs-1688-sourcing-guide.html</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
     <lastmod>2026-03-21</lastmod>
