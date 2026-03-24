@@ -10,9 +10,28 @@
     <link rel="icon" href="favicon.ico" sizes="48x48">
     <link rel="apple-touch-icon" href="images/logo.jpg">
     
+    <!-- Critical CSS inline -->
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1e293b;line-height:1.6}
+        .nav-fixed{position:fixed;top:0;left:0;right:0;z-index:50;background:white;box-shadow:0 1px 3px rgba(0,0,0,0.1);padding:1rem 0}
+        .bg-slate-900{background-color:#0f172a}
+        .text-white{color:#fff}
+        .text-center{text-align:center}
+        .container{max-width:1280px;margin:0 auto;padding:0 1.5rem}
+        .flex{display:flex}
+        .items-center{align-items:center}
+        .justify-between{justify-content:space-between}
+        .gap-8{gap:2rem}
+        .h-12{height:3rem}
+        .w-auto{width:auto}
+        .hidden{display:none}
+        @media(min-width:768px){.md\:flex{display:flex}.md\:h-14{height:3.5rem}}
+    </style>
+    
     <!-- Preload critical resources -->
     <link rel="preload" href="images/logo.jpg" as="image">
-    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="images/hero-bg.jpg" as="image">
     <meta name="keywords" content="China sourcing agent, China procurement service, buying agent Shanghai">
     <link rel="canonical" href="https://paxporttrading.com/">
     
@@ -34,8 +53,9 @@
     <!-- Lucide Icons - Async load -->
     <script src="https://unpkg.com/lucide@latest" defer></script>
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Custom CSS - Async load -->
+    <link rel="preload" href="css/style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="css/style.css"></noscript>
     
     <!-- Schema.org -->
     <script type="application/ld+json">
