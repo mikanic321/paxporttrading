@@ -1,14 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6G2LNG1S6W"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-6G2LNG1S6W');
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Paxport is your trusted China sourcing agent for textiles, machinery, household goods & more. 10+ years experience, 500+ factories audited.">
@@ -26,18 +18,11 @@
     <meta property="og:image" content="https://www.paxporttrading.com/images/logo.jpg">
     <meta property="og:url" content="https://www.paxporttrading.com/">
     
-    <!-- Fonts - Preload for performance -->
+    <!-- Fonts - Async load to prevent blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Prevent font blocking rendering -->
-    <style>
-        @font-face {
-            font-family: 'Inter';
-            font-display: swap;
-        }
-    </style>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"></noscript>
     
     <!-- Tailwind CSS - Local for faster loading -->
     <script src="js/tailwind.min.js" defer></script>
@@ -513,6 +498,20 @@
         const mobileMenu = document.getElementById('mobileMenu');
         menuBtn.addEventListener('click', () => {
             mobileMenu.classList.toggle('active');
+        });
+    </script>
+    
+    <!-- Google Analytics - Load after page content -->
+    <script>
+        window.addEventListener('load', function() {
+            var script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://www.googletagmanager.com/gtag/js?id=G-6G2LNG1S6W';
+            document.head.appendChild(script);
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-6G2LNG1S6W');
         });
     </script>
 </body>
