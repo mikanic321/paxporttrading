@@ -29,7 +29,7 @@
     <!-- Fonts - Preload for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
     
     <!-- Tailwind CSS - Async load -->
     <script src="https://cdn.tailwindcss.com" defer></script>
@@ -99,7 +99,7 @@
             </div>
             
             <!-- Mobile Menu Button -->
-            <button id="menuBtn" class="md:hidden text-white">
+            <button id="menuBtn" class="md:hidden text-white" aria-label="Open menu">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
         </div>
