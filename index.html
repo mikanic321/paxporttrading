@@ -425,6 +425,51 @@
 
     <!-- Scripts -->
     <script>
+        // GA4 Event Tracking
+        function trackEvent(eventName, eventParams) {
+            if (typeof gtag !== 'undefined') {
+                gtag('event', eventName, eventParams);
+            }
+        }
+        
+        // Track Contact Button Clicks
+        document.addEventListener('DOMContentLoaded', function() {
+            // Contact Us button
+            document.querySelectorAll('a[href="contact.html"]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    trackEvent('contact_click', {
+                        'location': btn.closest('section')?.className || 'header',
+                        'button_text': btn.textContent.trim()
+                    });
+                });
+            });
+            
+            // WhatsApp button
+            document.querySelectorAll('a[href*="wa.me"]').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    trackEvent('whatsapp_click', {
+                        'location': btn.closest('section')?.className || 'header'
+                    });
+                });
+            });
+            
+            // Email link clicks
+            document.querySelectorAll('a[href^="mailto:"]').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    trackEvent('email_click', {
+                        'email_address': link.href.replace('mailto:', '')
+                    });
+                });
+            });
+            
+            // Track time on page (engagement)
+            setTimeout(function() {
+                trackEvent('page_engagement', {
+                    'engagement_time': '2_minutes'
+                });
+            }, 120000);
+        });
+        
         // Initialize Lucide icons when DOM is ready
         document.addEventListener('DOMContentLoaded', function() {
             if (typeof lucide !== 'undefined') {
