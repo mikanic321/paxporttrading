@@ -43,6 +43,11 @@
         .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
         .footer-section a { color: #aaa; text-decoration: none; display: block; padding: 0.25rem 0; }
         .footer-bottom { text-align: center; padding-top: 2rem; margin-top: 2rem; border-top: 1px solid #333; color: #666; }
+            /* Mobile Menu */
+        @media (max-width: 768px) {
+            .nav-links { display: none !important; }
+            #menuBtn { display: block !important; }
+        }
     </style>
 </head>
 <body>
@@ -56,6 +61,16 @@
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
+            <button id="menuBtn" style="color: #0f172a; background: none; border: none; cursor: pointer; display: none;" aria-label="Open menu">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+        </div>
+        <div id="mobileMenu" style="display:none; padding: 1rem 2rem; background: white;">
+            <a href="index.html" style="display:block; padding: 0.75rem 0; color: #333; border-bottom: 1px solid #eee;">Home</a>
+            <a href="about.html" style="display:block; padding: 0.75rem 0; color: #333; border-bottom: 1px solid #eee;">About</a>
+            <a href="services.html" style="display:block; padding: 0.75rem 0; color: #333; border-bottom: 1px solid #eee;">Services</a>
+            <a href="blog.html" style="display:block; padding: 0.75rem 0; color: #333; border-bottom: 1px solid #eee;">Blog</a>
+            <a href="contact.html" style="display:block; padding: 0.75rem 0; color: white; background: #2563eb; text-align: center; border-radius: 0.5rem; margin-top: 0.5rem;">Contact</a>
         </div>
     </nav>
 
@@ -114,7 +129,7 @@
         </div>
 
         <div class="faq-section">
-            <h2>âœ?Quality Control</h2>
+            <h2>ï¿?Quality Control</h2>
             <div class="faq-item">
                 <h3>How do you ensure product quality?</h3>
                 <p>We implement a 3-stage quality control process: pre-production inspection, during-production monitoring, and pre-shipment inspection. We also verify supplier credentials and factory capabilities before production begins. <a href="blog/quality-control-importing-china-checklist.html">View our QC checklist</a>.</p>
@@ -203,5 +218,14 @@
             <p>&copy; 2026 Paxport Trading Co., Ltd. All rights reserved.</p>
         </div>
     </footer>
+    <script>
+        var menuBtn = document.getElementById('menuBtn');
+        var mobileMenu = document.getElementById('mobileMenu');
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', function() {
+                mobileMenu.style.display = mobileMenu.style.display === 'none' ? 'block' : 'none';
+            });
+        }
+    </script>
 </body>
 </html>
