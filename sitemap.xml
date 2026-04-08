@@ -120,43 +120,4 @@
     <changefreq>monthly</changefreq>
     <lastmod>2026-03-12</lastmod>
   </url>
-  
-  <!-- Service Detail Pages (Future) -->
-  <url>
-    <loc>https://paxporttrading.com/services/supplier-sourcing.html</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://paxporttrading.com/services/quality-control.html</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://paxporttrading.com/services/logistics-shipping.html</loc>
-    <priority>0.8</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  
-  <!-- Industry Pages (Future) -->
-  <url>
-    <loc>https://paxporttrading.com/industries/textiles-garments.html</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://paxporttrading.com/industries/machinery-equipment.html</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://paxporttrading.com/industries/household-goods.html</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>https://paxporttrading.com/industries/electronics-tech.html</loc>
-    <priority>0.7</priority>
-    <changefreq>monthly</changefreq>
-  </url>
 </urlset>
