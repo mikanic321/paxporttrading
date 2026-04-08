@@ -120,4 +120,18 @@
     <changefreq>monthly</changefreq>
     <lastmod>2026-03-12</lastmod>
   </url>
+  
+  <!-- New Blog Posts - April 2, 2026 -->
+  <url>
+    <loc>https://paxporttrading.com/blog/nigeria-sourcing-guide.html</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-04-02</lastmod>
+  </url>
+  <url>
+    <loc>https://paxporttrading.com/blog/africa-construction-materials-sourcing.html</loc>
+    <priority>0.8</priority>
+    <changefreq>monthly</changefreq>
+    <lastmod>2026-04-02</lastmod>
+  </url>
 </urlset>
